@@ -7,6 +7,7 @@ plugins {
 
 android {
     compileSdk = AppConfigs.compileSdk
+    ndkVersion = AppConfigs.ndkVersion
 
     defaultConfig {
         applicationId = AppConfigs.applicationId
@@ -67,6 +68,12 @@ android {
     kapt {
         arguments {
             arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path("CMakeLists.txt")
+            version = AppConfigs.cMakeVersion
         }
     }
 }

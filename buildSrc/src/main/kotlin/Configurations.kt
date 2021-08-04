@@ -24,6 +24,9 @@ object AppConfigs {
     const val versionName = "1.0.0"
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     const val dimension = "environment"
+
+    const val ndkVersion = "22.1.7171670"
+    const val cMakeVersion = "3.10.2"
 }
 
 private object Versions {
