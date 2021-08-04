@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.shubhampatel.tmdb.BuildConfig
 import dev.shubhampatel.tmdb.data.DataManager
 import dev.shubhampatel.tmdb.data.IDataManager
 import dev.shubhampatel.tmdb.data.local.ILocalDataManager
@@ -94,7 +95,7 @@ object AppModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
@@ -109,7 +110,11 @@ object AppModule {
         return OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(httpLoggingInterceptor)
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(httpLoggingInterceptor)
+                }
+            }
             .addInterceptor(apiInterceptor)
             .build()
     }

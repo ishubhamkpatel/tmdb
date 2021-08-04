@@ -28,12 +28,14 @@ android {
             isMinifyEnabled = !isDebuggable
             isShrinkResources = !isDebuggable
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org\"")
         }
         getByName("release") {
             isDebuggable = false
             isMinifyEnabled = !isDebuggable
             isShrinkResources = !isDebuggable
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org\"")
         }
     }
     flavorDimensions.add(AppConfigs.dimension)

@@ -8,11 +8,16 @@ import retrofit2.http.Query
 
 interface Api {
 
-    companion object {
-        private const val LIST = "/list"
+    private object Versions {
+        const val v3 = "/3"
+        const val v4 = "/4"
     }
 
-    @GET(LIST)
+    private object EndPoints {
+        const val LIST = "/list"
+    }
+
+    @GET(Versions.v4.plus(EndPoints.LIST))
     suspend fun getMoviesList(
         @Path("list_id") listId: Int,
         @Query("page") page: Int
