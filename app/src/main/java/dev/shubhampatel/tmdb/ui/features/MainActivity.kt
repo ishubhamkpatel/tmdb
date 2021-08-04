@@ -1,4 +1,4 @@
-package dev.shubhampatel.tmdb
+package dev.shubhampatel.tmdb.ui.features
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

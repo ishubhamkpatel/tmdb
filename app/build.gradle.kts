@@ -2,6 +2,7 @@ plugins {
     id(AppPlugins.androidApplication)
     kotlin(AppPlugins.kotlinAndroid)
     kotlin(AppPlugins.kotlinAnnotationProcessor)
+    id(AppPlugins.hilt)
 }
 
 android {
@@ -61,6 +62,11 @@ android {
     packagingOptions {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+        }
+    }
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
 }

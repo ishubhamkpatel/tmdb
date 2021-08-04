@@ -34,7 +34,7 @@ private object Versions {
     const val material = "1.4.0"
     const val lifecycle = "2.3.1"
     const val activityCompose = "1.3.0"
-    const val hilt = "2.35"
+    const val hilt = "2.38.1"
     const val coroutines = "1.5.1"
     const val retrofit = "2.9.0"
     const val okhttp = "4.9.0"
@@ -55,11 +55,12 @@ object Dependencies {
     private const val composeUi = "androidx.compose.ui:ui:${compose_version}"
     private const val composeMaterial = "androidx.compose.material:material:${compose_version}"
     private const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${compose_version}"
-    private const val lifecycles = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
+    private const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     private const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
 
     private const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hilt}"
-    private const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    private const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    private const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
     private const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     private const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     private const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
@@ -73,6 +74,7 @@ object Dependencies {
     private const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     private const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     private const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
+    private const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
     private const val gson = "com.google.code.gson:gson:${Versions.gson}"
     private const val coil = "io.coil-kt:coil:${Versions.coil}"
 
@@ -92,7 +94,7 @@ object Dependencies {
         add(composeUi)
         add(composeMaterial)
         add(composeUiToolingPreview)
-        add(lifecycles)
+        add(lifecycle)
         add(activityCompose)
         add(hiltAndroid)
         add(coroutinesCore)
@@ -112,8 +114,10 @@ object Dependencies {
     }
 
     val appLibrariesProcessors = arrayListOf<String>().apply {
+        add(hiltAndroidCompiler)
         add(hiltCompiler)
         add(roomCompiler)
+        add(lifecycleCompiler)
     }
 
     val testLibraries = arrayListOf<String>().apply {
