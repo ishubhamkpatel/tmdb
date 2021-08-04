@@ -37,6 +37,7 @@ private object Versions {
     const val material = "1.4.0"
     const val lifecycle = "2.3.1"
     const val activityCompose = "1.3.0"
+    const val navigationCompose = "2.4.0-alpha06"
     const val hilt = "2.38.1"
     const val coroutines = "1.5.1"
     const val retrofit = "2.9.0"
@@ -61,6 +62,7 @@ object Dependencies {
     private const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     private const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
 
+    private const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
     private const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hilt}"
     private const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     private const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
@@ -99,6 +101,7 @@ object Dependencies {
         add(composeUiToolingPreview)
         add(lifecycle)
         add(activityCompose)
+        add(navigationCompose)
         add(hiltAndroid)
         add(coroutinesCore)
         add(coroutinesAndroid)
