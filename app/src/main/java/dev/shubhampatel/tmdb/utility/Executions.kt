@@ -19,51 +19,53 @@ suspend fun <T> safeApiCall(
     noOfRetries: Int = 0,
     delayFactor: Long = 1000L,
     apiCall: ApiCall<T>
-): Flow<ApiResponse<T>> {
-    return flow<ApiResponse<T>> {
+): Flow<Result<T>> {
+    return flow<Result<T>> {
         val response = apiCall()
         if (response.isSuccessful) {
             response.body()?.let {
-                emit(ApiResponse.Success(it))
+                emit(Result.Success(it))
             } ?: kotlin.run {
                 throw IOException("Empty response body!")
             }
         } else {
-            emit(ApiResponse.Failure("Api request failed for reason: ${response.message()}"))
+            emit(Result.Failure("Api request failed. Reason: ${response.message()}"))
         }
     }.retryWhen { cause, attempt ->
         return@retryWhen if ((cause is IOException) and (attempt < noOfRetries)) {
             val delay = delayFactor.times(attempt.inc())
-            emit(ApiResponse.Failure("Retrying in ${delay.div(1000L)} sec..."))
+            emit(Result.Failure("Retrying in ${delay.div(1000L)} sec..."))
             delay(delay)
             true
         } else {
-            emit(ApiResponse.Failure(errorCaseMessage))
+            emit(Result.Failure(errorCaseMessage))
             false
         }
     }.catch {
-        emit(ApiResponse.Failure(errorCaseMessage))
+        emit(Result.Failure(errorCaseMessage))
     }.flowOn(Dispatchers.IO)
 }
 
-suspend fun <T> getViewStateFlow(
-    function: suspend () -> ApiResponse<T>
-): Flow<ViewState<T>> {
+suspend fun <T> getStateFlow(
+    function: suspend () -> Flow<Result<T>>
+): Flow<State<T>> {
     return flow {
-        emit(ViewState.Loading(true))
-        when (val result = function()) {
-            is ApiResponse.Success -> {
-                result.data?.let {
-                    emit(ViewState.RenderSuccess(it))
-                } ?: kotlin.run {
-                    emit(ViewState.RenderError("Something went wrong!"))
+        emit(State.Loading(true))
+        function().collect {
+            when (it) {
+                is Result.Success -> {
+                    it.data?.let {
+                        emit(State.Success(it))
+                    } ?: kotlin.run {
+                        emit(State.Error("Something went wrong!"))
+                    }
+                }
+                is Result.Failure -> {
+                    emit(State.Error(it.message ?: "Something went wrong!"))
                 }
             }
-            is ApiResponse.Failure -> {
-                emit(ViewState.RenderError(result.message ?: "Something went wrong!"))
-            }
         }
-        emit(ViewState.Loading(false))
+        emit(State.Loading(false))
     }
 }
 

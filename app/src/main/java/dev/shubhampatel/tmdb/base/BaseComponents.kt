@@ -3,16 +3,19 @@ package dev.shubhampatel.tmdb.base
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 
-abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, Effect : ViewSideEffect> :
-    ViewModel() {
+sealed interface BaseContract {
+    interface ViewState
+    interface ViewEvent
+    interface ViewSideEffect
+}
+
+abstract class BaseUseCase<Event : BaseContract.ViewEvent, UiState : BaseContract.ViewState,
+        Effect : BaseContract.ViewSideEffect> {
 
     private val initialState: UiState by lazy { setInitialState() }
     abstract fun setInitialState(): UiState
@@ -25,22 +28,16 @@ abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, Effect : Vi
     private val _effect: Channel<Effect> = Channel()
     val effect = _effect.receiveAsFlow()
 
-    init {
-        subscribeToEvents()
-    }
-
-    private fun subscribeToEvents() {
-        viewModelScope.launch {
-            _event.collect {
-                handleEvents(it)
-            }
+    protected suspend fun subscribeToEvents() {
+        _event.collect {
+            handleEvents(it)
         }
     }
 
-    abstract fun handleEvents(event: Event)
+    abstract suspend fun handleEvents(event: Event)
 
-    protected fun setEvent(event: Event) {
-        viewModelScope.launch { _event.emit(event) }
+    protected suspend fun setEvent(event: Event) {
+        _event.emit(event)
     }
 
     protected fun setState(reducer: UiState.() -> UiState) {
@@ -48,14 +45,8 @@ abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, Effect : Vi
         _viewState.value = newState
     }
 
-    protected fun setEffect(builder: () -> Effect) {
+    protected suspend fun setEffect(builder: () -> Effect) {
         val effectValue = builder()
-        viewModelScope.launch { _effect.send(effectValue) }
+        _effect.send(effectValue)
     }
 }
-
-interface ViewState
-
-interface ViewEvent
-
-interface ViewSideEffect

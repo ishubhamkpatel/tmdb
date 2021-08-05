@@ -3,12 +3,12 @@ package dev.shubhampatel.tmdb.models
 import com.google.gson.annotations.SerializedName
 
 data class MoviesListModel (
-    @field:SerializedName("results") val results : List<Result?>?,
+    @field:SerializedName("results") val movies : List<Movie?>?,
     @field:SerializedName("total_pages") val totalPages : Int?,
     @field:SerializedName("total_results") val totalResults : Int?
 )
 
-data class Result (
+data class Movie (
     @field:SerializedName("adult") val adult : Boolean?,
     @field:SerializedName("backdrop_path") val backdropPath : String?,
     @field:SerializedName("genre_ids") val genreIds : List<Int?>?,
