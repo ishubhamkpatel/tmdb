@@ -1,5 +1,6 @@
 package dev.shubhampatel.tmdb.data.remote
 
+import dev.shubhampatel.tmdb.models.Movie
 import dev.shubhampatel.tmdb.models.MoviesListModel
 import dev.shubhampatel.tmdb.utility.Result
 import dev.shubhampatel.tmdb.utility.safeApiCall
@@ -8,6 +9,7 @@ import javax.inject.Inject
 
 interface IRemoteDataManager {
     suspend fun getMoviesList(listId: Int, page: Int): Flow<Result<MoviesListModel>>
+    suspend fun getMovieDetails(movieId: Int): Flow<Result<Movie>>
 }
 
 class RemoteDataManager @Inject constructor(private val api: Api) : IRemoteDataManager {
@@ -17,6 +19,12 @@ class RemoteDataManager @Inject constructor(private val api: Api) : IRemoteDataM
     ): Flow<Result<MoviesListModel>> {
         return safeApiCall("Error fetching movies list.") {
             api.getMoviesList(listId, page)
+        }
+    }
+
+    override suspend fun getMovieDetails(movieId: Int): Flow<Result<Movie>> {
+        return safeApiCall("Error fetching movie details.") {
+            api.getMovieDetails(movieId)
         }
     }
 }

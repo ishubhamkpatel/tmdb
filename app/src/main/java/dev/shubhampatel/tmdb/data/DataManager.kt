@@ -3,6 +3,7 @@ package dev.shubhampatel.tmdb.data
 import dev.shubhampatel.tmdb.data.local.ILocalDataManager
 import dev.shubhampatel.tmdb.data.local.db.entity.MovieEntity
 import dev.shubhampatel.tmdb.data.remote.IRemoteDataManager
+import dev.shubhampatel.tmdb.models.Movie
 import dev.shubhampatel.tmdb.models.MoviesListModel
 import dev.shubhampatel.tmdb.utility.Result
 import kotlinx.coroutines.flow.Flow
@@ -50,5 +51,9 @@ class DataManager @Inject constructor(
         listId: Int, page: Int
     ): Flow<Result<MoviesListModel>> {
         return remoteDataManager.getMoviesList(listId, page)
+    }
+
+    override suspend fun getMovieDetails(movieId: Int): Flow<Result<Movie>> {
+        return remoteDataManager.getMovieDetails(movieId)
     }
 }

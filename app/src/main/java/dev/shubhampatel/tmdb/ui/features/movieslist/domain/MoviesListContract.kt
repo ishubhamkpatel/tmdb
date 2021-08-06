@@ -5,7 +5,7 @@ import dev.shubhampatel.tmdb.models.Movie
 
 sealed interface MoviesListContract {
     sealed class Event : BaseContract.ViewEvent {
-        data class MovieSelection(val movieId: String) : Event()
+        data class MovieSelection(val movieId: Int) : Event()
     }
 
     data class State(
@@ -17,7 +17,7 @@ sealed interface MoviesListContract {
         object MoviesLoaded : Effect()
         data class MoviesLoadingError(val message: String) : Effect()
         sealed class Navigation : Effect() {
-            data class ToMovieDetails(val movieId: String) : Navigation()
+            data class ToMovieDetails(val movieId: Int) : Navigation()
         }
     }
 }

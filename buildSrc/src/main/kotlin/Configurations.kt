@@ -38,6 +38,7 @@ private object Versions {
     const val lifecycle = "2.3.1"
     const val activityCompose = "1.3.0"
     const val navigationCompose = "2.4.0-alpha06"
+    const val hiltNavigationCompose = "1.0.0-alpha03"
     const val hilt = "2.38.1"
     const val coroutines = "1.5.1"
     const val retrofit = "2.9.0"
@@ -58,28 +59,39 @@ object Dependencies {
     private const val material = "com.google.android.material:material:${Versions.material}"
     private const val composeUi = "androidx.compose.ui:ui:${compose_version}"
     private const val composeMaterial = "androidx.compose.material:material:${compose_version}"
-    private const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${compose_version}"
+    private const val composeUiToolingPreview =
+        "androidx.compose.ui:ui-tooling-preview:${compose_version}"
     private const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
-    private const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
+    private const val activityCompose =
+        "androidx.activity:activity-compose:${Versions.activityCompose}"
 
-    private const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
+    private const val navigationCompose =
+        "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
+    private const val hiltNavigationCompose =
+        "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     private const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hilt}"
-    private const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    private const val hiltAndroidCompiler =
+        "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     private const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
-    private const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-    private const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    private const val coroutinesCore =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    private const val coroutinesAndroid =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     private const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    private const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    private const val retrofitGsonConverter =
+        "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     private const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     private const val okhttpLogger = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     private const val dataStoreTyped = "androidx.datastore:datastore:${Versions.dataStore}"
-    private const val dataStorePrefs = "androidx.datastore:datastore-preferences:${Versions.dataStore}"
+    private const val dataStorePrefs =
+        "androidx.datastore:datastore-preferences:${Versions.dataStore}"
     private const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     private const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     private const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     private const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     private const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
-    private const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
+    private const val lifecycleCompiler =
+        "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
     private const val gson = "com.google.code.gson:gson:${Versions.gson}"
     private const val coil = "io.coil-kt:coil:${Versions.coil}"
 
@@ -102,6 +114,7 @@ object Dependencies {
         add(lifecycle)
         add(activityCompose)
         add(navigationCompose)
+        add(hiltNavigationCompose)
         add(hiltAndroid)
         add(coroutinesCore)
         add(coroutinesAndroid)

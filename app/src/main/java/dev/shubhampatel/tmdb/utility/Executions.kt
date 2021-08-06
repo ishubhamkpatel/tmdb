@@ -46,26 +46,26 @@ suspend fun <T> safeApiCall(
     }.flowOn(Dispatchers.IO)
 }
 
-suspend fun <T> getStateFlow(
+suspend fun <T> getProcessStateFlow(
     function: suspend () -> Flow<Result<T>>
-): Flow<State<T>> {
+): Flow<ProcessState<T>> {
     return flow {
-        emit(State.Loading(true))
-        function().collect {
-            when (it) {
-                is Result.Success -> {
-                    it.data?.let {
-                        emit(State.Success(it))
-                    } ?: kotlin.run {
-                        emit(State.Error("Something went wrong!"))
-                    }
-                }
+        emit(ProcessState.Progress(true))
+        function().collect { result ->
+            when (result) {
                 is Result.Failure -> {
-                    emit(State.Error(it.message ?: "Something went wrong!"))
+                    emit(ProcessState.Error(result.message ?: "Something went wrong!"))
+                }
+                is Result.Success -> {
+                    result.data?.let {
+                        emit(ProcessState.Success(it))
+                    } ?: kotlin.run {
+                        emit(ProcessState.Error("Something went wrong!"))
+                    }
                 }
             }
         }
-        emit(State.Loading(false))
+        emit(ProcessState.Progress(false))
     }
 }
 
